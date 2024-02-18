@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import './App.css'
 
 function App() {
   const [cards, setCards] = useState([
@@ -18,7 +18,7 @@ function App() {
   ]);
 
 
-  return <div classNAme="app">
+  return <div className="app">
       <h1> Lista de Cards</h1>
       <div className="card-list">
         {cards.map((card) => (
