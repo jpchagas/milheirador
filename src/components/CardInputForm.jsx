@@ -39,6 +39,17 @@ const CardInputForm = ({ onSubmit }) => {
 
     if (isValid) {
       onSubmit(form);
+      // Reset the form
+      setForm({
+        bandeira: '',
+        emissor: '',
+        tipo: '',
+        accumulation_factor: '',
+        accumulation_factor_abroad: '',
+        conversion_ratio: '',
+        currency: '',
+        annuity: ''
+      });
     } else {
       alert("Preencha todos os campos antes de enviar.");
     }

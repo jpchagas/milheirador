@@ -1,25 +1,44 @@
-import React from "react";
-import { Card, ListGroup, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, ListGroup, Row, Col, Button} from "react-bootstrap";
+
+const cardsPerPage = 8;
 
 const CardRankingList = ({ rankedCards }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(rankedCards.length / cardsPerPage);
+  const startIndex = (currentPage - 1) * cardsPerPage;
+  const currentCards = rankedCards.slice(startIndex, startIndex + cardsPerPage);
+
+  const goToNext = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const goToPrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
   return (
     <div>
-      <h2 className="mb-4">Top Credit Cards</h2>
+      <h3 className="mb-4">Top Credit Cards</h3>
       <Row className="g-4">
-        {rankedCards.map((card, index) => (
+        {currentCards.map((card, index) => (
           <Col key={card.id} xs={12} sm={6} md={3}>
-            <Card className="h-100">
+            <Card
+              className="h-100 card-hover shadow-sm"
+              style={{ cursor: "pointer" }}
+              onClick={() => window.open(card.link, "_blank")}
+            >
               <Card.Body>
-                <Card.Title>{card.name}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Rank #{index + 1}</Card.Subtitle>
+                <Card.Title>{card.emissor} {card.tipo}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  #{startIndex + index + 1}
+                </Card.Subtitle>
                 <Card.Text>
-                  Bandeira: {card.brand}<br />
-                  Emissor: {card.issuer}<br />
-                  Tipo: {card.type}<br />
-                  Acúmulo: {card.accumulationFactor} pts (Brasil)<br />
-                  Acúmulo Int.: {card.accumulationFactorAbroad} pts<br />
-                  Conversão: {card.conversionRatio} pts/milha<br />
-                  Moeda: {card.currency}<br />
+                  Bandeira: {card.bandeira}<br />
+                  Acúmulo: {card.accumulation_factor} pts (BR)<br />
+                  Int.: {card.accumulation_factor_abroad} pts<br />
+                  Conversão: {card.conversion_ratio} pts/milha<br />
                   Anuidade: R$ {card.annuity}
                 </Card.Text>
               </Card.Body>
@@ -27,6 +46,23 @@ const CardRankingList = ({ rankedCards }) => {
           </Col>
         ))}
       </Row>
+      <div className="d-flex justify-content-between align-items-center mt-4">
+        <Button
+          variant="outline-primary"
+          onClick={goToPrevious}
+          disabled={currentPage === 1}
+        >
+          ← Anterior
+        </Button>
+        <span>Página {currentPage} de {totalPages}</span>
+        <Button
+          variant="outline-primary"
+          onClick={goToNext}
+          disabled={currentPage === totalPages}
+        >
+          Próxima →
+        </Button>
+      </div>
     </div>
   );
 };
