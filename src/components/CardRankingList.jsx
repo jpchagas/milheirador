@@ -30,15 +30,15 @@ const CardRankingList = ({ rankedCards }) => {
               onClick={() => window.open(card.link, "_blank")}
             >
               <Card.Body>
-                <Card.Title>{card.emissor} {card.tipo}</Card.Title>
+                <Card.Title>{card.brand} {card.type}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   #{startIndex + index + 1}
                 </Card.Subtitle>
                 <Card.Text>
-                  Bandeira: {card.bandeira}<br />
-                  Acúmulo: {card.accumulation_factor} pts (BR)<br />
-                  Int.: {card.accumulation_factor_abroad} pts<br />
-                  Conversão: {card.conversion_ratio} pts/milha<br />
+                  Bandeira: {card.issuer}<br />
+                  Acúmulo: {card.accumulationFactor} pts (BR)<br />
+                  Int.: {card.accumulationFactorAbroad} pts<br />
+                  Conversão: {card.conversionRatio} pts/milha<br />
                   Anuidade: R$ {card.annuity}
                 </Card.Text>
               </Card.Body>
