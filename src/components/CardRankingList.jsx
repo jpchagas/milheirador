@@ -16,7 +16,7 @@ const CardRankingList = ({ rankedCards }) => {
 
   const goToPrevious = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
+  };  
 
   return (
     <div>
