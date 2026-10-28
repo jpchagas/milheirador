@@ -1,8 +1,10 @@
 export const creditCards = [
-{
+  {
+    id: "bradesco-elo-mais",
     brand: "elo",
     issuer: "bradesco",
     type: "mais",
+    program: "livelo",
     accumulationFactor: 1.0,
     accumulationFactorAbroad: 1.0,
     conversionRatio: 1,
@@ -10,9 +12,11 @@ export const creditCards = [
     annuity: 456.0
   },
   {
+    id: "bradesco-american-express-green",
     brand: "american express",
     issuer: "bradesco",
     type: "green",
+    program: "livelo",
     accumulationFactor: 1.0,
     accumulationFactorAbroad: 1.0,
     conversionRatio: 1,
@@ -20,9 +24,11 @@ export const creditCards = [
     annuity: 612.0
   },
   {
+    id: "bradesco-visa-infinite",
     brand: "visa",
     issuer: "bradesco",
     type: "infinite",
+    program: "livelo",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 2.0,
     conversionRatio: 1,
@@ -30,9 +36,11 @@ export const creditCards = [
     annuity: 1200.0
   },
   {
+    id: "bradesco-mastercard-black",
     brand: "mastercard",
     issuer: "bradesco",
     type: "black",
+    program: "livelo",
     accumulationFactor: 1.8,
     accumulationFactorAbroad: 1.8,
     conversionRatio: 1,
@@ -40,9 +48,11 @@ export const creditCards = [
     annuity: 1356.0
   },
   {
+    id: "bradesco-elo-nanquim",
     brand: "elo",
     issuer: "bradesco",
     type: "nanquim",
+    program: "livelo",
     accumulationFactor: 1.8,
     accumulationFactorAbroad: 2.5,
     conversionRatio: 1,
@@ -50,9 +60,11 @@ export const creditCards = [
     annuity: 1356.0
   },
   {
+    id: "bradesco-american-express-the-platinum",
     brand: "american express",
     issuer: "bradesco",
     type: "the platinum",
+    program: "livelo",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -60,9 +72,11 @@ export const creditCards = [
     annuity: 1812.0
   },
   {
+    id: "bradesco-visa-signature",
     brand: "visa",
     issuer: "bradesco",
     type: "signature",
+    program: "livelo",
     accumulationFactor: 1.0,
     accumulationFactorAbroad: 1.0,
     conversionRatio: 1,
@@ -70,9 +84,11 @@ export const creditCards = [
     annuity: 732.0
   },
   {
+    id: "bradesco-elo-grafite",
     brand: "elo",
     issuer: "bradesco",
     type: "grafite",
+    program: "livelo",
     accumulationFactor: 1.0,
     accumulationFactorAbroad: 2.0,
     conversionRatio: 1,
@@ -80,9 +96,11 @@ export const creditCards = [
     annuity: 672.0
   },
   {
+    id: "bradesco-american-express-gold",
     brand: "american express",
     issuer: "bradesco",
     type: "gold",
+    program: "livelo",
     accumulationFactor: 1.5,
     accumulationFactorAbroad: 1.8,
     conversionRatio: 1,
@@ -90,9 +108,11 @@ export const creditCards = [
     annuity: 780.0
   },
   {
+    id: "bradesco-visa-platinum",
     brand: "visa",
     issuer: "bradesco",
     type: "platinum",
+    program: "livelo",
     accumulationFactor: 1.0,
     accumulationFactorAbroad: 1.0,
     conversionRatio: 1,
@@ -100,9 +120,11 @@ export const creditCards = [
     annuity: 588.0
   },
   {
+    id: "itau-mastercard-azul-skyline",
     brand: "mastercard",
     issuer: "itau",
     type: "azul skyline",
+    program: "azul fidelidade",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -110,9 +132,11 @@ export const creditCards = [
     annuity: 105.0
   },
   {
+    id: "itau-visa-azul-infinite",
     brand: "visa",
     issuer: "itau",
     type: "azul infinite",
+    program: "azul fidelidade",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -120,9 +144,11 @@ export const creditCards = [
     annuity: 105.0
   },
   {
+    id: "itau-mastercard-latampass-black",
     brand: "mastercard",
     issuer: "itau",
     type: "latampass black",
+    program: "latam pass",
     accumulationFactor: 2.5,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -130,9 +156,11 @@ export const creditCards = [
     annuity: 105.0
   },
   {
+    id: "itau-mastercard-latampass-platinum",
     brand: "mastercard",
     issuer: "itau",
     type: "latampass platinum",
+    program: "latam pass",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 2.0,
     conversionRatio: 1,
@@ -140,9 +168,11 @@ export const creditCards = [
     annuity: 620.0
   },
   {
+    id: "itau-mastercard-azul-platinum",
     brand: "mastercard",
     issuer: "itau",
     type: "azul platinum",
+    program: "azul fidelidade",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 2.2,
     conversionRatio: 1,
@@ -150,9 +180,11 @@ export const creditCards = [
     annuity: 590.0
   },
   {
+    id: "itau-mastercard-latampass-internacional",
     brand: "mastercard",
     issuer: "itau",
-    type: "latampass international",
+    type: "latampass internacional",
+    program: "latam pass",
     accumulationFactor: 1.3,
     accumulationFactorAbroad: 1.3,
     conversionRatio: 1,
@@ -160,9 +192,11 @@ export const creditCards = [
     annuity: 420.0
   },
   {
+    id: "itau-visa-latampass-platinum",
     brand: "visa",
     issuer: "itau",
     type: "latampass platinum",
+    program: "latam pass",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 2.0,
     conversionRatio: 1,
@@ -170,9 +204,11 @@ export const creditCards = [
     annuity: 620.0
   },
   {
+    id: "itau-mastercard-latampass-gold",
     brand: "mastercard",
     issuer: "itau",
     type: "latampass gold",
+    program: "latam pass",
     accumulationFactor: 1.6,
     accumulationFactorAbroad: 1.6,
     conversionRatio: 1,
@@ -180,9 +216,11 @@ export const creditCards = [
     annuity: 440.0
   },
   {
+    id: "itau-mastercard-personalite-black",
     brand: "mastercard",
     issuer: "itau",
     type: "personalité black",
+    program: "proprio",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -190,19 +228,23 @@ export const creditCards = [
     annuity: 1056.0
   },
   {
+    id: "itau-visa-latampass-infinite",
     brand: "visa",
     issuer: "itau",
     type: "latampass infinite",
+    program: "latam pass",
     accumulationFactor: 2.5,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
     currency: "dolar",
     annuity: 1050.0
   },
-    {
+  {
+    id: "itau-visa-latampass-gold",
     brand: "visa",
     issuer: "itau",
     type: "latampass gold",
+    program: "latam pass",
     accumulationFactor: 1.6,
     accumulationFactorAbroad: 1.6,
     conversionRatio: 1,
@@ -210,9 +252,11 @@ export const creditCards = [
     annuity: 440.0
   },
   {
+    id: "itau-mastercard-uniclass-black",
     brand: "mastercard",
     issuer: "itau",
     type: "uniclass black",
+    program: "proprio",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 2.0,
     conversionRatio: 1,
@@ -220,9 +264,11 @@ export const creditCards = [
     annuity: 960.0
   },
   {
+    id: "itau-visa-latampass-internacional",
     brand: "visa",
     issuer: "itau",
     type: "latampass internacional",
+    program: "latam pass",
     accumulationFactor: 1.3,
     accumulationFactorAbroad: 1.3,
     conversionRatio: 1,
@@ -230,9 +276,11 @@ export const creditCards = [
     annuity: 420.0
   },
   {
+    id: "itau-mastercard-uniclass-platinum",
     brand: "mastercard",
     issuer: "itau",
     type: "uniclass platinum",
+    program: "proprio",
     accumulationFactor: 1.5,
     accumulationFactorAbroad: 1.5,
     conversionRatio: 1,
@@ -240,9 +288,11 @@ export const creditCards = [
     annuity: 720.0
   },
   {
+    id: "itau-visa-azul-platinum",
     brand: "visa",
     issuer: "itau",
     type: "azul platinum",
+    program: "azul fidelidade",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 2.6,
     conversionRatio: 1,
@@ -250,9 +300,11 @@ export const creditCards = [
     annuity: 620.0
   },
   {
+    id: "itau-mastercard-pao-de-acucar-black",
     brand: "mastercard",
     issuer: "itau",
-    type: "pão de açucar black",
+    type: "pão de açúcar black",
+    program: "proprio",
     accumulationFactor: 2.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -260,9 +312,11 @@ export const creditCards = [
     annuity: 678.0
   },
   {
+    id: "itau-visa-azul-gold",
     brand: "visa",
     issuer: "itau",
     type: "azul gold",
+    program: "azul fidelidade",
     accumulationFactor: 1.7,
     accumulationFactorAbroad: 1.7,
     conversionRatio: 1,
@@ -270,9 +324,11 @@ export const creditCards = [
     annuity: 440.0
   },
   {
+    id: "itau-visa-azul-internacional",
     brand: "visa",
     issuer: "itau",
-    type: "azul international",
+    type: "azul internacional",
+    program: "azul fidelidade",
     accumulationFactor: 1.4,
     accumulationFactorAbroad: 1.4,
     conversionRatio: 1,
@@ -280,9 +336,11 @@ export const creditCards = [
     annuity: 420.0
   },
   {
+    id: "itau-mastercard-azul-gold",
     brand: "mastercard",
     issuer: "itau",
     type: "azul gold",
+    program: "azul fidelidade",
     accumulationFactor: 1.7,
     accumulationFactorAbroad: 1.7,
     conversionRatio: 1,
@@ -290,19 +348,23 @@ export const creditCards = [
     annuity: 440.0
   },
   {
+    id: "itau-mastercard-azul-internacional",
     brand: "mastercard",
     issuer: "itau",
-    type: "azil internacional",
+    type: "azul internacional",
+    program: "azul fidelidade",
     accumulationFactor: 1.4,
     accumulationFactorAbroad: 1.4,
     conversionRatio: 1,
     currency: "dolar",
     annuity: 420.0
   },
-   {
+  {
+    id: "santander-x-elite",
     brand: null,
     issuer: "santander",
     type: "elite",
+    program: "esfera",
     accumulationFactor: 1.5,
     accumulationFactorAbroad: 1.5,
     conversionRatio: 1,
@@ -310,9 +372,11 @@ export const creditCards = [
     annuity: 600.0
   },
   {
+    id: "santander-x-unique",
     brand: null,
     issuer: "santander",
     type: "unique",
+    program: "esfera",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -320,9 +384,11 @@ export const creditCards = [
     annuity: 1050.0
   },
   {
+    id: "santander-mastercard-aadvantage-quartz",
     brand: "mastercard",
     issuer: "santander",
     type: "aadvantage quartz",
+    program: "aadvantage",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -330,9 +396,11 @@ export const creditCards = [
     annuity: 468.0
   },
   {
+    id: "santander-mastercard-aadvantage-platinum",
     brand: "mastercard",
     issuer: "santander",
     type: "aadvantage platinum",
+    program: "aadvantage",
     accumulationFactor: 4.0,
     accumulationFactorAbroad: 4.0,
     conversionRatio: 1,
@@ -340,9 +408,11 @@ export const creditCards = [
     annuity: 660.0
   },
   {
+    id: "santander-mastercard-aadvantage-black",
     brand: "mastercard",
     issuer: "santander",
     type: "aadvantage black",
+    program: "aadvantage",
     accumulationFactor: 5.0,
     accumulationFactorAbroad: 5.0,
     conversionRatio: 1,
@@ -350,9 +420,11 @@ export const creditCards = [
     annuity: 1632.0
   },
   {
+    id: "santander-visa-gol-smiles-gold",
     brand: "visa",
     issuer: "santander",
     type: "gol smiles gold",
+    program: "smiles",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -360,9 +432,11 @@ export const creditCards = [
     annuity: 468.0
   },
   {
+    id: "santander-visa-gol-smiles-platinum",
     brand: "visa",
     issuer: "santander",
     type: "gol smiles platinum",
+    program: "smiles",
     accumulationFactor: 3.5,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -370,9 +444,11 @@ export const creditCards = [
     annuity: 660.0
   },
   {
+    id: "santander-visa-gol-smiles-black",
     brand: "visa",
     issuer: "santander",
     type: "gol smiles black",
+    program: "smiles",
     accumulationFactor: 5.5,
     accumulationFactorAbroad: 5.5,
     conversionRatio: 1,
@@ -380,9 +456,11 @@ export const creditCards = [
     annuity: 1356.0
   },
   {
+    id: "santander-american-express-gold",
     brand: "american express",
     issuer: "santander",
     type: "gold",
+    program: "esfera",
     accumulationFactor: 1.2,
     accumulationFactorAbroad: 1.2,
     conversionRatio: 1,
@@ -390,19 +468,23 @@ export const creditCards = [
     annuity: 549.96
   },
   {
+    id: "santander-american-express-platinum",
     brand: "american express",
     issuer: "santander",
     type: "platinum",
+    program: "esfera",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 2.2,
     conversionRatio: 1,
     currency: "dolar",
     annuity: 1449.96
   },
-    {
+  {
+    id: "c6-mastercard-carbon",
     brand: "mastercard",
     issuer: "c6",
     type: "carbon",
+    program: "proprio",
     accumulationFactor: 2.5,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -410,9 +492,11 @@ export const creditCards = [
     annuity: 1176.0
   },
   {
+    id: "c6-mastercard-black",
     brand: "mastercard",
     issuer: "c6",
     type: "black",
+    program: "proprio",
     accumulationFactor: 2.5,
     accumulationFactorAbroad: 3.5,
     conversionRatio: 1,
@@ -420,9 +504,11 @@ export const creditCards = [
     annuity: 600.0
   },
   {
+    id: "c6-mastercard-platinum",
     brand: "mastercard",
     issuer: "c6",
     type: "platinum",
+    program: "proprio",
     accumulationFactor: 0.45,
     accumulationFactorAbroad: 0.45,
     conversionRatio: 1,
@@ -430,9 +516,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "c6-mastercard-graphene",
     brand: "mastercard",
     issuer: "c6",
     type: "graphene",
+    program: "proprio",
     accumulationFactor: 4.0,
     accumulationFactorAbroad: 4.0,
     conversionRatio: 1,
@@ -440,9 +528,11 @@ export const creditCards = [
     annuity: 3960.0
   },
   {
+    id: "xp-visa-infinite",
     brand: "visa",
     issuer: "xp",
     type: "infinite",
+    program: "proprio",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 2.2,
     conversionRatio: 1,
@@ -450,9 +540,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "inter-mastercard-gold",
     brand: "mastercard",
     issuer: "inter",
     type: "gold",
+    program: "proprio",
     accumulationFactor: 0.1,
     accumulationFactorAbroad: 0.1,
     conversionRatio: 1,
@@ -460,9 +552,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "inter-mastercard-platinum",
     brand: "mastercard",
     issuer: "inter",
     type: "platinum",
+    program: "proprio",
     accumulationFactor: 0.2,
     accumulationFactorAbroad: 0.2,
     conversionRatio: 1,
@@ -470,9 +564,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "inter-mastercard-prime",
     brand: "mastercard",
     issuer: "inter",
     type: "prime",
+    program: "proprio",
     accumulationFactor: 0.4,
     accumulationFactorAbroad: 0.4,
     conversionRatio: 1,
@@ -480,9 +576,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "inter-mastercard-win",
     brand: "mastercard",
     issuer: "inter",
     type: "win",
+    program: "proprio",
     accumulationFactor: 0.5,
     accumulationFactorAbroad: 0.5,
     conversionRatio: 1,
@@ -490,9 +588,11 @@ export const creditCards = [
     annuity: 0.0
   },
   {
+    id: "btg-mastercard-ultrablue",
     brand: "mastercard",
     issuer: "btg",
     type: "ultrablue",
+    program: "proprio",
     accumulationFactor: 3.0,
     accumulationFactorAbroad: 3.0,
     conversionRatio: 1,
@@ -500,9 +600,11 @@ export const creditCards = [
     annuity: 4800.0
   },
   {
+    id: "btg-mastercard-black",
     brand: "mastercard",
     issuer: "btg",
     type: "black",
+    program: "proprio",
     accumulationFactor: 2.2,
     accumulationFactorAbroad: 2.2,
     conversionRatio: 1,
@@ -510,9 +612,11 @@ export const creditCards = [
     annuity: 600.0
   },
   {
+    id: "btg-mastercard-platinum",
     brand: "mastercard",
     issuer: "btg",
     type: "platinum",
+    program: "proprio",
     accumulationFactor: 1.6,
     accumulationFactorAbroad: 1.6,
     conversionRatio: 1,
@@ -520,9 +624,11 @@ export const creditCards = [
     annuity: 500.0
   },
   {
+    id: "btg-mastercard-tap",
     brand: "mastercard",
     issuer: "btg",
     type: "tap",
+    program: "tap miles&go",
     accumulationFactor: 4.0,
     accumulationFactorAbroad: 4.0,
     conversionRatio: 1,
@@ -530,9 +636,11 @@ export const creditCards = [
     annuity: 1200.0
   },
   {
+    id: "brb-visa-dux",
     brand: "visa",
     issuer: "brb",
     type: "dux",
+    program: "proprio",
     accumulationFactor: 5.0,
     accumulationFactorAbroad: 7.0,
     conversionRatio: 1,
