@@ -55,5 +55,12 @@ export const formatMilesDelta = value => signedInteger.format(value);
 export const formatAccumulation = card =>
   `${decimal.format(card.accumulationFactor)} pts/${card.currency === "dolar" ? "US$" : "R$"}`;
 
-// Accepts both "5,50" and "5.50" from the inputs.
-export const parseNumber = text => Number(String(text).replace(",", "."));
+// Reads pt-BR numbers ("5.000,50", "10.000", "5,50") and also accepts "5.50". With a comma,
+// dots are thousands separators. Without one, dots in 3-digit groups ("1.500") are thousands
+// separators too, and any other dot is the decimal point.
+export const parseNumber = text => {
+  const value = String(text).trim();
+  if (value.includes(",")) return Number(value.replaceAll(".", "").replace(",", "."));
+  if (/^\d{1,3}(\.\d{3})+$/.test(value)) return Number(value.replaceAll(".", ""));
+  return Number(value);
+};

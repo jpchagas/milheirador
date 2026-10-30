@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Milheirador is a client-only React 19 + Vite SPA, styled with Tailwind CSS v4 and shadcn/ui, that ranks Brazilian credit cards by the cost of each mile they earn across all points programs (Livelo, Esfera, airline programs, banks' own programs). The UI text is in Portuguese (pt-BR). There is no backend, router, or state library, and no test framework is set up.
+Milheirador is a client-only React 19 + Vite SPA, styled with Tailwind CSS v4 and shadcn/ui, that ranks Brazilian credit cards by the cost of each mile they earn across all points programs (Livelo, Esfera, airline programs, banks' own programs). The UI text is in Portuguese (pt-BR). There is no backend, router library, or state library, and no test framework is set up.
 
 ## Commands
 
@@ -30,13 +30,15 @@ npx shadcn@latest add <component>   # add a shadcn/ui component to src/component
 ## Architecture
 
 - `src/data/cards.js` exports `creditCards`, a hand-maintained static array that serves as the whole dataset. Each entry has `id, brand, issuer, type, program, accumulationFactor, accumulationFactorAbroad, conversionRatio, currency, annuity`. Values are lowercase; display labels come from `src/utils/format.js`. `currency` is `"dolar"` (points per US$) or `"real"` (points per R$). `program` is where the points go (`livelo`, `esfera`, `latam pass`, `azul fidelidade`, `smiles`, `aadvantage`, `tap miles&go`, or `proprio` for the bank's own program). Two Santander cards still have `brand: null` (network unknown).
-- `src/utils/rankMyCard.js` holds the scoring logic. `evaluateCard` adds `annualMiles` and `costPerMile` for a given `{ monthlySpend, dollarRate }`, `rankCards` sorts cheapest miles first, and `findUpgrades` returns cheaper cards (top 3, plus the best one from the same issuer).
-- `src/App.jsx` owns the spend, dollar-rate and selected-card state and re-ranks on every render; the dataset is small. A manually entered card (id `"my-card"`) is added to the ranking. The components are:
-  - `UserProfileForm`: spend inputs plus the bank → card picker, falling back to `CardInputForm` for manual entry.
-  - `UpgradeSuggestions`: the selected card's metrics and suggested upgrades.
-  - `CardRankingList`: filters (bank, network, program, max annuity) and a table-style list, 10 per page.
-- Inputs for spend and dollar rate are text fields parsed with `parseNumber`, which accepts a pt-BR comma decimal.
-- `src/components/GoogleAds.jsx` loads the AdSense script once and pushes each slot. The client and slot IDs are still placeholders (`ca-pub-XXXX…`). One ad slot sits under the profile panel (desktop only) and one under the ranking.
+- `src/utils/rankMyCard.js` holds the scoring logic. `evaluateCard` adds `annualMiles` and `costPerMile` for a given `{ monthlySpend, dollarRate }`, and `rankCards` sorts cheapest miles first.
+- `src/App.jsx` has two views, switched by the URL hash with a small `useHashRoute` hook (no router library): home (`#/` or no hash) and the full ranking (`#/ranking`). Navigation uses plain `<a href="#/…">` links.
+  - **Home:** a centered `UserProfileForm` with **Calcular** and **Ver ranking** buttons. Calcular requires a card and stores `result = { card, settings }`, a snapshot of that calculation, and `TopRanking` then shows the top 3 plus the user's card (with a "…" row when it is below 3rd).
+  - **Ranking:** `CardRankingList` (filters for bank, network, program and max annuity, 10 per page), ranked with the form's current values and highlighting `result.card`.
+- App owns the whole form as one `profile` object (spend and dollar-rate strings, `manual`, `issuer`, `cardId`, `manualCard` fields), so it survives navigation. Every change goes through `handleProfileChange`, which also clears `result`: editing anything hides the results until the next Calcular. The ranking is recomputed on every render; the dataset is small.
+- `UserProfileForm` is controlled by `profile` and only keeps a `submitted` flag for showing errors. In manual mode it renders `CardInputForm`, which only holds the fields (no `<form>` or submit button). The defaults, validation and conversion to a card (id `"my-card"`) live in `src/utils/manualCard.js`. A manual card is added to the ranking.
+- `RankingTable` renders the table rows (`{ card, position }`, with position in the full ranking) for both `TopRanking` and `CardRankingList`.
+- Numeric inputs are text fields parsed with `parseNumber` (`format.js`). It reads pt-BR numbers: `"5.000,50"`, `"10.000"` (3-digit dot groups are thousands) and `"5,50"`, and also accepts `"5.50"`.
+- `src/components/GoogleAds.jsx` loads the AdSense script once and pushes each slot. The client and slot IDs are still placeholders (`ca-pub-XXXX…`). One ad slot sits at the bottom of each view.
 - International spend (`accumulationFactorAbroad`) is not part of the score yet.
 
 ## Intended scoring formula (from README)
