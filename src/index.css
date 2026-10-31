@@ -151,3 +151,7 @@
     @apply font-sans;
     }
 }
+/* No empty bar while AdSense has no ad for the bottom banner (e.g. before the site is approved). */
+.ad-banner:has(ins[data-ad-status="unfilled"]) {
+  display: none;
+}

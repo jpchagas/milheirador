@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import CardInputForm from "@/components/CardInputForm";
 import { cardName, issuerLabel, parseNumber } from "@/utils/format";
-import { manualCardFromForm, validateManualCard } from "@/utils/manualCard";
+import { validateManualCard } from "@/utils/manualCard";
 
 const MoneyField = ({ id, label, value, onChange, description, error }) => {
   const invalid = !(parseNumber(value) > 0);
@@ -33,8 +33,9 @@ const MoneyField = ({ id, label, value, onChange, description, error }) => {
 };
 
 // Controlled by App, which owns `profile` (spend, dollar rate and the card picker or
-// manual card fields) so that any change can clear the last result.
-const UserProfileForm = ({ cards, profile, rankingHref, onChange, onCalculate }) => {
+// manual card fields) so that any change can clear the last result. `card` is the card the
+// profile describes, or null while the form is invalid.
+const UserProfileForm = ({ cards, profile, card, resultHref, rankingHref, onChange }) => {
   const { monthlySpend, dollarRate, manual, issuer, cardId, manualCard } = profile;
   const [submitted, setSubmitted] = useState(false);
   const update = changes => onChange({ ...profile, ...changes });
@@ -54,17 +55,11 @@ const UserProfileForm = ({ cards, profile, rankingHref, onChange, onCalculate })
     setSubmitted(false);
   };
 
+  // Reached by the Enter key, or by Calcular while the form is invalid (to show the errors).
   const handleSubmit = e => {
     e.preventDefault();
     setSubmitted(true);
-    if (!(parseNumber(monthlySpend) > 0) || !(parseNumber(dollarRate) > 0)) return;
-    if (manual) {
-      if (Object.keys(validateManualCard(manualCard)).length > 0) return;
-      onCalculate(manualCardFromForm(manualCard));
-    } else {
-      const card = cards.find(c => c.id === cardId);
-      if (card) onCalculate(card);
-    }
+    if (card) window.location.assign(resultHref);
   };
 
   return (
@@ -137,9 +132,18 @@ const UserProfileForm = ({ cards, profile, rankingHref, onChange, onCalculate })
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row">
-            <Button type="submit" size="lg" className="flex-1">
-              <Calculator /> Calcular
-            </Button>
+            {/* A valid form makes Calcular a plain link, so AdSense can show a vignette on it. */}
+            {card ? (
+              <Button asChild size="lg" className="flex-1">
+                <a href={resultHref}>
+                  <Calculator /> Calcular
+                </a>
+              </Button>
+            ) : (
+              <Button type="submit" size="lg" className="flex-1">
+                <Calculator /> Calcular
+              </Button>
+            )}
             <Button asChild variant="outline" size="lg" className="flex-1">
               <a href={rankingHref}>
                 <ListOrdered /> Ver ranking

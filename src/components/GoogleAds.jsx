@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
+import { cn } from "@/lib/utils";
 
-const AD_CLIENT = "ca-pub-XXXXXXXXXXXXXXX";
-const SCRIPT_ID = "adsbygoogle-script";
+// The AdSense script itself is loaded by index.html.
+const AD_CLIENT = "ca-pub-9175151923356236";
 
-const GoogleAds = () => {
+const AD_SLOTS = {
+  banner: "3249043428",
+  content: "2488168086",
+};
+
+// One AdSense display unit; `slot` is a key of AD_SLOTS. A responsive unit picks its own
+// size; otherwise `className` must give the unit its width and height.
+const GoogleAds = ({ slot, responsive = true, className }) => {
   useEffect(() => {
-    // Every ad slot renders this component, but the AdSense script must load only once.
-    if (!document.getElementById(SCRIPT_ID)) {
-      const script = document.createElement("script");
-      script.id = SCRIPT_ID;
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT}`;
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-    }
     // Ask AdSense to fill this slot.
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -22,15 +21,16 @@ const GoogleAds = () => {
     }
   }, []);
 
-  return (
-    <div>
-      <ins className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client={AD_CLIENT}
-        data-ad-slot="1234567890"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    </div>
+  return responsive ? (
+    <ins className={cn("adsbygoogle block", className)}
+      data-ad-client={AD_CLIENT}
+      data-ad-slot={AD_SLOTS[slot]}
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  ) : (
+    <ins className={cn("adsbygoogle inline-block", className)}
+      data-ad-client={AD_CLIENT}
+      data-ad-slot={AD_SLOTS[slot]}></ins>
   );
 };
 

@@ -2,77 +2,60 @@ import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { creditCards } from "@/data/cards";
-import { DEFAULT_DOLLAR_RATE, DEFAULT_MONTHLY_SPEND, rankCards } from "@/utils/rankMyCard";
-import { formatBRL, parseNumber } from "@/utils/format";
-import { emptyManualCard } from "@/utils/manualCard";
+import { rankCards } from "@/utils/rankMyCard";
+import { formatBRL } from "@/utils/format";
+import {
+  HOME_PATH,
+  RANKING_PATH,
+  RESULT_PATH,
+  cardFromProfile,
+  profileFromSearch,
+  profileHref,
+  settingsFromProfile,
+} from "@/utils/profile";
 import UserProfileForm from "@/components/UserProfileForm";
 import TopRanking from "@/components/TopRanking";
 import CardRankingList from "@/components/CardRankingList";
 import GoogleAds from "@/components/GoogleAds";
 import ThemeToggle from "@/components/ThemeToggle";
 
-const HOME_HREF = "#/";
-const RANKING_HREF = "#/ranking";
-
-// Two views, switched by the URL hash so the back button and links work without a router.
-function useHashRoute() {
-  const [hash, setHash] = useState(window.location.hash);
-  useEffect(() => {
-    const onChange = () => {
-      setHash(window.location.hash);
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener("hashchange", onChange);
-    return () => window.removeEventListener("hashchange", onChange);
-  }, []);
-  return hash === RANKING_HREF ? "ranking" : "home";
-}
-
-const initialProfile = {
-  monthlySpend: String(DEFAULT_MONTHLY_SPEND),
-  dollarRate: DEFAULT_DOLLAR_RATE.toFixed(2).replace(".", ","),
-  manual: false,
-  issuer: "",
-  cardId: "",
-  manualCard: emptyManualCard,
-};
+// Every navigation is a full page load, so the path is read once.
+const path = window.location.pathname.replace(/(.)\/+$/, "$1");
+const view = path === RANKING_PATH ? "ranking" : "home";
 
 // A manually entered card joins the ranking so the user can see where it lands.
 const rankWith = (card, settings) =>
   rankCards(card && !creditCards.includes(card) ? [...creditCards, card] : creditCards, settings);
 
 function App() {
-  const route = useHashRoute();
-  // The form lives here so it survives the trip to the ranking page.
-  const [profile, setProfile] = useState(initialProfile);
-  // Snapshot of the last calculation: the card and the settings it was ranked with.
-  const [result, setResult] = useState(null);
+  const [profile, setProfile] = useState(() => profileFromSearch(window.location.search));
+  // /resultado shows the result for the profile in the URL until the form is edited.
+  const [showResult, setShowResult] = useState(path === RESULT_PATH);
   const resultsRef = useRef(null);
 
-  const settings = {
-    monthlySpend: parseNumber(profile.monthlySpend) || 0,
-    dollarRate: parseNumber(profile.dollarRate) || DEFAULT_DOLLAR_RATE,
-  };
+  const settings = settingsFromProfile(profile);
+  const card = cardFromProfile(profile, creditCards);
+  const ranking = rankWith(card, settings);
+  const resultCard = showResult && card && ranking.find(c => c.id === card.id);
 
-  // Any edit makes the result stale, so it is hidden until the next calculation.
+  // Any edit makes the result stale: hide it and keep the URL in step with the form.
   const handleProfileChange = next => {
     setProfile(next);
-    setResult(null);
+    setShowResult(false);
+    window.history.replaceState(null, "", profileHref(HOME_PATH, next));
   };
-  const handleCalculate = card => setResult({ card, settings });
 
   useEffect(() => {
-    if (result) resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [result]);
-
-  const resultRanking = result && rankWith(result.card, result.settings);
-  const resultCard = result && resultRanking.find(c => c.id === result.card.id);
+    if (resultCard) resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Only when the result page first loads.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex min-h-svh flex-col">
       <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4">
-          <a href={HOME_HREF} className="flex items-center gap-2">
+          <a href={HOME_PATH} className="flex items-center gap-2">
             <img src="/logo.png" alt="" className="h-10 w-auto" />
             <span className="font-heading text-2xl font-extrabold tracking-tight text-primary">
               Milheirador
@@ -83,11 +66,11 @@ function App() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        {route === "ranking" ? (
+        {view === "ranking" ? (
           <div className="space-y-6">
             <div className="space-y-3">
               <Button asChild variant="ghost" size="sm" className="-ml-2.5">
-                <a href={HOME_HREF}>
+                <a href={profileHref(HOME_PATH, profile)}>
                   <ArrowLeft /> Voltar
                 </a>
               </Button>
@@ -97,11 +80,8 @@ function App() {
                 a {formatBRL(settings.dollarRate)}.
               </p>
             </div>
-            <CardRankingList
-              rankedCards={rankWith(result?.card, settings)}
-              highlightId={result?.card.id}
-            />
-            <GoogleAds />
+            <CardRankingList rankedCards={ranking} highlightId={card?.id} />
+            <GoogleAds slot="content" />
           </div>
         ) : (
           <div className="mx-auto max-w-3xl space-y-8">
@@ -122,19 +102,20 @@ function App() {
               <UserProfileForm
                 cards={creditCards}
                 profile={profile}
-                rankingHref={RANKING_HREF}
+                card={card}
+                resultHref={profileHref(RESULT_PATH, profile)}
+                rankingHref={profileHref(RANKING_PATH, profile)}
                 onChange={handleProfileChange}
-                onCalculate={handleCalculate}
               />
             </div>
 
             {resultCard && (
               <section ref={resultsRef} className="scroll-mt-20">
-                <TopRanking rankedCards={resultRanking} current={resultCard} settings={result.settings} />
+                <TopRanking rankedCards={ranking} current={resultCard} settings={settings} />
               </section>
             )}
 
-            <GoogleAds />
+            <GoogleAds slot="content" />
           </div>
         )}
       </main>
@@ -145,6 +126,18 @@ function App() {
           acúmulo, anuidade e regras de transferência com o seu banco antes de decidir.
         </div>
       </footer>
+
+      {/* Sticks to the bottom of the screen and takes its own space at the end of the page,
+          so it never covers the footer. index.css hides it when AdSense has no ad. */}
+      <div className="ad-banner sticky bottom-0 z-10 border-t bg-background/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl justify-center">
+          <GoogleAds
+            slot="banner"
+            responsive={false}
+            className="h-[50px] w-full max-w-[728px] sm:h-[90px]"
+          />
+        </div>
+      </div>
     </div>
   )
 }
