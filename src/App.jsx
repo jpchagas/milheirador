@@ -16,19 +16,52 @@ import {
 import UserProfileForm from "@/components/UserProfileForm";
 import TopRanking from "@/components/TopRanking";
 import CardRankingList from "@/components/CardRankingList";
+import HomeGuide from "@/components/HomeGuide";
 import GoogleAds from "@/components/GoogleAds";
 import ThemeToggle from "@/components/ThemeToggle";
+import HowWeCalculate from "@/pages/HowWeCalculate";
+import Programs from "@/pages/Programs";
+import Faq from "@/pages/Faq";
+import About from "@/pages/About";
+import Privacy from "@/pages/Privacy";
+import Contact from "@/pages/Contact";
 
-// Every navigation is a full page load, so the path is read once.
-const path = window.location.pathname.replace(/(.)\/+$/, "$1");
-const view = path === RANKING_PATH ? "ranking" : "home";
+// Text pages, by path (their <head> data is in routes.js).
+const textPages = {
+  "/como-calculamos": HowWeCalculate,
+  "/programas": Programs,
+  "/perguntas-frequentes": Faq,
+  "/sobre": About,
+  "/privacidade": Privacy,
+  "/contato": Contact,
+};
+
+const headerLinks = [
+  { href: RANKING_PATH, label: "Ranking" },
+  { href: "/como-calculamos", label: "Como calculamos" },
+  { href: "/programas", label: "Programas" },
+];
+
+const footerLinks = [
+  ...headerLinks,
+  { href: "/perguntas-frequentes", label: "Perguntas frequentes" },
+  { href: "/sobre", label: "Sobre" },
+  { href: "/privacidade", label: "Privacidade" },
+  { href: "/contato", label: "Contato" },
+];
 
 // A manually entered card joins the ranking so the user can see where it lands.
 const rankWith = (card, settings) =>
   rankCards(card && !creditCards.includes(card) ? [...creditCards, card] : creditCards, settings);
 
-function App() {
-  const [profile, setProfile] = useState(() => profileFromSearch(window.location.search));
+// Every navigation is a full page load, so `path` and `search` come from the URL once
+// (main.jsx in the browser, scripts/prerender.js at build time).
+function App({ path: rawPath, search }) {
+  const path = rawPath.replace(/(.)\/+$/, "$1");
+  const TextPage = textPages[path];
+  const view = TextPage ? "text" : path === RANKING_PATH ? "ranking" : "home";
+
+  const [profile, setProfile] = useState(() => profileFromSearch(search));
   // /resultado shows the result for the profile in the URL until the form is edited.
   const [showResult, setShowResult] = useState(path === RESULT_PATH);
   const resultsRef = useRef(null);
@@ -61,12 +94,23 @@ function App() {
               Milheirador
             </span>
           </a>
-          <ThemeToggle />
+          <div className="flex items-center gap-1">
+            <nav className="hidden items-center gap-1 sm:flex">
+              {headerLinks.map(({ href, label }) => (
+                <Button key={href} asChild variant="ghost" size="sm">
+                  <a href={href} aria-current={path === href ? "page" : undefined}>{label}</a>
+                </Button>
+              ))}
+            </nav>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        {view === "ranking" ? (
+        {view === "text" ? (
+          <TextPage />
+        ) : view === "ranking" ? (
           <div className="space-y-6">
             <div className="space-y-3">
               <Button asChild variant="ghost" size="sm" className="-ml-2.5">
@@ -77,11 +121,18 @@ function App() {
               <h1 className="font-heading text-3xl font-extrabold tracking-tight">Ranking completo</h1>
               <p className="text-muted-foreground">
                 Todos os cartões para um gasto de {formatBRL(settings.monthlySpend)} por mês e dólar
-                a {formatBRL(settings.dollarRate)}.
+                a {formatBRL(settings.dollarRate)}. Para usar o seu gasto,{" "}
+                <a href={profileHref(HOME_PATH, profile)} className="font-medium text-primary underline underline-offset-4">
+                  preencha o simulador
+                </a>
+                . Entenda a ordem em{" "}
+                <a href="/como-calculamos" className="font-medium text-primary underline underline-offset-4">
+                  como calculamos
+                </a>
+                .
               </p>
             </div>
             <CardRankingList rankedCards={ranking} highlightId={card?.id} />
-            <GoogleAds slot="content" />
           </div>
         ) : (
           <div className="mx-auto max-w-3xl space-y-8">
@@ -115,29 +166,26 @@ function App() {
               </section>
             )}
 
+            <HomeGuide />
+            {/* The only ad on this page, after the explanatory text and not next to the form. */}
             <GoogleAds slot="content" />
           </div>
         )}
       </main>
 
       <footer className="border-t">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-sm text-muted-foreground">
-          Valores informativos, baseados nas condições divulgadas pelos emissores. Confirme
-          acúmulo, anuidade e regras de transferência com o seu banco antes de decidir.
+        <div className="mx-auto max-w-6xl space-y-4 px-4 py-6 text-sm text-muted-foreground">
+          <nav className="flex flex-wrap gap-x-4 gap-y-2">
+            {footerLinks.map(({ href, label }) => (
+              <a key={href} href={href} className="hover:text-foreground hover:underline">{label}</a>
+            ))}
+          </nav>
+          <p>
+            Valores informativos, baseados nas condições divulgadas pelos emissores. Confirme
+            acúmulo, anuidade e regras de transferência com o seu banco antes de decidir.
+          </p>
         </div>
       </footer>
-
-      {/* Sticks to the bottom of the screen and takes its own space at the end of the page,
-          so it never covers the footer. index.css hides it when AdSense has no ad. */}
-      <div className="ad-banner sticky bottom-0 z-10 border-t bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl justify-center">
-          <GoogleAds
-            slot="banner"
-            responsive={false}
-            className="h-[50px] w-full max-w-[728px] sm:h-[90px]"
-          />
-        </div>
-      </div>
     </div>
   )
 }

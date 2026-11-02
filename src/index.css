@@ -151,7 +151,27 @@
     @apply font-sans;
     }
 }
-/* No empty bar while AdSense has no ad for the bottom banner (e.g. before the site is approved). */
-.ad-banner:has(ins[data-ad-status="unfilled"]) {
-  display: none;
+/* Text pages (components/Article.jsx). */
+@layer components {
+  .article-body {
+    @apply space-y-4 leading-relaxed;
+  }
+  .article-body h2 {
+    @apply pt-6 font-heading text-2xl font-bold tracking-tight;
+  }
+  .article-body h3 {
+    @apply pt-2 text-lg font-semibold;
+  }
+  .article-body ul {
+    @apply list-disc space-y-2 pl-6;
+  }
+  .article-body ol {
+    @apply list-decimal space-y-2 pl-6;
+  }
+  .article-body a {
+    @apply font-medium text-primary underline underline-offset-4;
+  }
+  .article-body code {
+    @apply rounded bg-muted px-1.5 py-0.5 text-sm;
+  }
 }

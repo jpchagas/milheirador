@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 
 // The initial theme is applied by the inline script in index.html.
 const ThemeToggle = () => {
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
+  const [dark, setDark] = useState(
+    () => typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
 
   const toggle = () => {
     const next = !dark;
