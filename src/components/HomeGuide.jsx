@@ -10,15 +10,15 @@ const programs = [...new Set(creditCards.map(c => c.program))]
 const steps = [
   {
     title: "Informe seus gastos",
-    text: "Digite quanto você gasta por mês no cartão e a cotação do dólar que o seu banco usa.",
+    text: "Digite quanto você gasta por mês no cartão. A cotação do dólar já vem com a do dia, e você pode trocar pela do seu banco.",
   },
   {
     title: "Escolha o seu cartão",
-    text: "Selecione o banco e o cartão que você usa hoje, ou cadastre um cartão que não está na lista.",
+    text: "Selecione o banco e o cartão que você usa hoje, com a anuidade que você paga, ou cadastre um cartão que não está na lista.",
   },
   {
-    title: "Compare o custo da milha",
-    text: `Veja a posição do seu cartão entre os ${creditCards.length} do ranking e quais geram as milhas mais baratas para o seu perfil.`,
+    title: "Compare os indicadores",
+    text: `Veja a posição do seu cartão entre os ${creditCards.length} do ranking pelo Índice Milheirador e quais geram mais milhas para o seu perfil.`,
   },
 ];
 
@@ -36,15 +36,20 @@ const HomeGuide = () => (
       ))}
     </ol>
 
-    <h2>O que é o custo por milha</h2>
+    <h2>O que é o Índice Milheirador</h2>
     <p>
       Cartões diferentes pontuam de jeitos diferentes: uns dão pontos por dólar, outros por real,
       uns enviam os pontos para a Livelo ou a Esfera, outros direto para uma companhia aérea. Para
-      comparar todos na mesma base, o Milheirador calcula quantos reais você precisa gastar para
-      ganhar cada milha, já incluindo a anuidade:
+      comparar todos na mesma base, o Milheirador calcula o desembolso total em reais por milha
+      gerada, já incluindo a anuidade:
     </p>
     <p>
-      <code>custo por milha = (gasto anual + anuidade) ÷ milhas acumuladas no ano</code>
+      <code>Índice Milheirador = (gasto anual + anuidade) ÷ milhas geradas no ano</code>
+    </p>
+    <p>
+      Quanto menor, melhor. O índice não é o preço de uma milha: o gasto também paga o que você
+      comprou. Ao lado dele, o ranking mostra as milhas por real gasto e as milhas extras que cada
+      real de anuidade rende em relação ao melhor cartão gratuito.
     </p>
     <p>
       Como o gasto entra na conta, o resultado muda com o seu perfil: um cartão com anuidade alta

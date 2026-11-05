@@ -2,57 +2,27 @@ import React, { useState } from "react";
 import { Calculator, ListOrdered } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FieldGroup } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
-import CardInputForm from "@/components/CardInputForm";
-import { cardName, issuerLabel, parseNumber } from "@/utils/format";
-import { validateManualCard } from "@/utils/manualCard";
-
-const MoneyField = ({ id, label, value, onChange, description, error }) => {
-  const invalid = !(parseNumber(value) > 0);
-  return (
-    <Field data-invalid={invalid || undefined}>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <InputGroup>
-        <InputGroupAddon>
-          <InputGroupText>R$</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupInput
-          id={id}
-          inputMode="decimal"
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          aria-invalid={invalid || undefined}
-        />
-      </InputGroup>
-      {invalid ? <FieldError>{error}</FieldError> : description && <FieldDescription>{description}</FieldDescription>}
-    </Field>
-  );
-};
+import CardPicker from "@/components/CardPicker";
+import DollarRateField from "@/components/DollarRateField";
+import MoneyField from "@/components/MoneyField";
+import { formatBRL, formatDecimal } from "@/utils/format";
 
 // Controlled by App, which owns `profile` (spend, dollar rate and the card picker or
 // manual card fields) so that any change can clear the last result. `card` is the card the
-// profile describes, or null while the form is invalid.
-const UserProfileForm = ({ cards, profile, card, resultHref, rankingHref, onChange }) => {
-  const { monthlySpend, dollarRate, manual, issuer, cardId, manualCard } = profile;
+// profile describes, or null while the form is invalid. `ptax` is today's dollar rate, or null.
+const UserProfileForm = ({ cards, profile, card, ptax, resultHref, rankingHref, onChange }) => {
+  const { monthlySpend } = profile;
   const [submitted, setSubmitted] = useState(false);
+  // The picked card as listed, for its full annuity (`card` has the one the user pays).
+  const listCard = !profile.manual && cards.find(c => c.id === profile.cardId);
   const update = changes => onChange({ ...profile, ...changes });
 
-  const issuers = [...new Set(cards.map(c => c.issuer))].sort((a, b) =>
-    issuerLabel(a).localeCompare(issuerLabel(b))
-  );
-  const issuerCards = cards
-    .filter(c => c.issuer === issuer)
-    .sort((a, b) => cardName(a).localeCompare(cardName(b)));
-
-  const manualErrors = submitted && manual ? validateManualCard(manualCard) : {};
-  const cardError = submitted && !manual && !cardId ? "Selecione o seu cartão." : null;
-
-  const toggleManual = () => {
-    update({ manual: !manual });
-    setSubmitted(false);
+  // Switching between the list and the manual fields starts over without errors.
+  const handleCardChange = changes => {
+    update(changes);
+    if ("manual" in changes) setSubmitted(false);
   };
 
   // Reached by the Enter key, or by Calcular while the form is invalid (to show the errors).
@@ -78,73 +48,44 @@ const UserProfileForm = ({ cards, profile, card, resultHref, rankingHref, onChan
               onChange={value => update({ monthlySpend: value })}
               error="Informe um valor maior que zero."
             />
-            <MoneyField
-              id="dollarRate"
-              label="Cotação do dólar no cartão"
-              value={dollarRate}
-              onChange={value => update({ dollarRate: value })}
-              description="Usada nos cartões que pontuam por dólar."
-              error="Informe uma cotação válida."
-            />
+            <DollarRateField profile={profile} ptax={ptax} onChange={update} />
           </FieldGroup>
 
           <Separator />
 
           <div className="space-y-3">
             <h3 className="text-sm font-medium">Seu cartão atual</h3>
-            {manual ? (
-              <CardInputForm
-                issuers={issuers}
-                form={manualCard}
-                errors={manualErrors}
-                onChange={value => update({ manualCard: value })}
+            <CardPicker cards={cards} profile={profile} showErrors={submitted} onChange={handleCardChange} />
+            {listCard && (
+              <MoneyField
+                id="annuity"
+                label="Anuidade que você paga"
+                optional
+                value={profile.annuity}
+                placeholder={formatDecimal(listCard.annuity)}
+                onChange={value => update({ annuity: value })}
+                description={`Vazio: a anuidade cheia, ${formatBRL(listCard.annuity)}. Use 0 se tiver isenção.`}
+                error="Informe a anuidade (0 se tiver isenção) ou deixe vazio."
               />
-            ) : (
-              <Field data-invalid={!!cardError || undefined}>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Select value={issuer} onValueChange={value => update({ issuer: value, cardId: "" })}>
-                    <SelectTrigger className="w-full" aria-label="Banco">
-                      <SelectValue placeholder="Banco" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {issuers.map(i => (
-                        <SelectItem key={i} value={i}>{issuerLabel(i)}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={cardId} onValueChange={value => update({ cardId: value })} disabled={!issuer}>
-                    <SelectTrigger className="w-full" aria-label="Cartão" aria-invalid={!!cardError || undefined}>
-                      <SelectValue placeholder="Cartão" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {issuerCards.map(c => (
-                        <SelectItem key={c.id} value={c.id}>{cardName(c)}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <FieldError>{cardError}</FieldError>
-              </Field>
             )}
-            <Button type="button" variant="link" className="h-auto px-0" onClick={toggleManual}>
-              {manual ? "Escolher meu cartão da lista" : "Meu cartão não está na lista"}
-            </Button>
           </div>
 
+          {/* Stacked on phones. `sm:flex-1` only: in a column, flex-1 (basis 0) would override
+              the button height and squash the buttons to their text. */}
           <div className="flex flex-col gap-2 sm:flex-row">
             {/* A valid form makes Calcular a plain link, so AdSense can show a vignette on it. */}
             {card ? (
-              <Button asChild size="lg" className="flex-1">
+              <Button asChild size="lg" className="h-11 text-base sm:flex-1">
                 <a href={resultHref}>
                   <Calculator /> Calcular
                 </a>
               </Button>
             ) : (
-              <Button type="submit" size="lg" className="flex-1">
+              <Button type="submit" size="lg" className="h-11 text-base sm:flex-1">
                 <Calculator /> Calcular
               </Button>
             )}
-            <Button asChild variant="outline" size="lg" className="flex-1">
+            <Button asChild variant="outline" size="lg" className="h-11 text-base sm:flex-1">
               <a href={rankingHref}>
                 <ListOrdered /> Ver ranking
               </a>

@@ -1,26 +1,34 @@
 import React from "react";
 import Article from "@/components/Article";
 import GoogleAds from "@/components/GoogleAds";
-import { evaluateCard, milesPerReal } from "@/utils/rankMyCard";
-import { formatBRL, formatMiles } from "@/utils/format";
+import { rankCards } from "@/utils/rankMyCard";
+import {
+  formatBRL,
+  formatFeeEfficiency,
+  formatIndex,
+  formatMiles,
+  formatMilesPerReal,
+} from "@/utils/format";
 
 // The worked example runs through the same functions as the ranking, so its numbers can't drift.
 const settings = { monthlySpend: 5000, dollarRate: 5.5 };
 const lowSpend = { ...settings, monthlySpend: 2000 };
-const premium = { accumulationFactor: 2, conversionRatio: 1, currency: "dolar", annuity: 1200 };
-const basic = { accumulationFactor: 1, conversionRatio: 1, currency: "dolar", annuity: 0 };
+const premium = { id: "a", accumulationFactor: 2, conversionRatio: 1, currency: "dolar", annuity: 1200 };
+const basic = { id: "b", accumulationFactor: 1, conversionRatio: 1, currency: "dolar", annuity: 0 };
 
-const decimal = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 4 });
+const byId = ranked => Object.fromEntries(ranked.map(card => [card.id, card]));
+const example = byId(rankCards([premium, basic], settings));
+const exampleLow = byId(rankCards([premium, basic], lowSpend));
 
 const exampleRows = [
-  { name: "Cartão A", card: premium, earns: "2 pontos por US$", annuity: "R$ 1.200 por ano" },
-  { name: "Cartão B", card: basic, earns: "1 ponto por US$", annuity: "sem anuidade" },
-].map(row => ({ ...row, result: evaluateCard(row.card, settings) }));
+  { name: "Cartão A", card: example.a, earns: "2 pontos por US$", annuity: "R$ 1.200 por ano" },
+  { name: "Cartão B", card: example.b, earns: "1 ponto por US$", annuity: "sem anuidade" },
+];
 
 const HowWeCalculate = () => (
   <Article
-    title="Como calculamos o custo da milha"
-    intro="O Milheirador ordena os cartões pelo custo da milha: quantos reais você precisa gastar no cartão, já somando a anuidade, para ganhar cada milha. Quanto menor o custo, mais rápido o cartão transforma seus gastos em milhas."
+    title="Como calculamos o Índice Milheirador"
+    intro="O ranking compara os cartões por três indicadores: milhas por real gasto, milhas extras por real de anuidade e o Índice Milheirador, que mede o desembolso por milha gerada. Todos usam a mesma base anual, o seu gasto mensal e a anuidade que você efetivamente paga."
   >
     <h2>Passo 1: pontos por real gasto</h2>
     <p>
@@ -38,37 +46,59 @@ const HowWeCalculate = () => (
       pontuam em dólar acumulam por real.
     </p>
 
-    <h2>Passo 2: de pontos para milhas</h2>
+    <h2>Passo 2: milhas por R$ 1 gasto</h2>
     <p>
       Pontos de programas como Livelo e Esfera não são milhas: eles precisam ser transferidos para
       uma companhia aérea. Usamos a proporção dessa transferência (na maioria dos casos, 1 ponto
-      vira 1 milha). Cartões de companhias aéreas acumulam milhas diretamente.
+      vira 1 milha). Cartões de companhias aéreas acumulam milhas diretamente. O resultado é o
+      primeiro indicador do ranking:
     </p>
     <p>
       <code>milhas por real = pontos por real × milhas por ponto</code>
     </p>
-
-    <h2>Passo 3: milhas acumuladas no ano</h2>
     <p>
-      Com o seu gasto mensal, calculamos quantas milhas o cartão gera em doze meses:
+      Ele mede só a eficiência de acúmulo: quanto maior, mais milhas cada real em compras
+      elegíveis gera. A anuidade não entra.
     </p>
+
+    <h2>Passo 3: milhas geradas no ano</h2>
+    <p>Com o seu gasto mensal, calculamos quantas milhas o cartão gera em doze meses:</p>
     <p>
       <code>milhas por ano = gasto mensal × 12 × milhas por real</code>
     </p>
 
-    <h2>Passo 4: custo por milha</h2>
+    <h2>Passo 4: Índice Milheirador</h2>
     <p>
-      Por fim, dividimos tudo o que você paga no ano, o gasto mais a anuidade, pelas milhas
-      acumuladas:
+      O Índice Milheirador divide tudo o que passa pelo cartão no ano, o gasto mais a anuidade,
+      pelas milhas geradas:
     </p>
     <p>
-      <code>custo por milha = (gasto anual + anuidade) ÷ milhas por ano</code>
+      <code>Índice Milheirador = (gasto anual + anuidade) ÷ milhas por ano</code>
     </p>
     <p>
-      O ranking coloca primeiro os cartões com o menor custo por milha para o seu perfil de gastos.
+      É o desembolso total em reais por milha gerada. Quanto menor, melhor, e o ranking começa pelo
+      menor índice. Ele <strong>não é o preço de uma milha</strong>: o gasto no cartão também paga
+      os produtos e serviços que você comprou, então o índice não deve ser comparado com o preço de
+      compra ou venda de milhas.
     </p>
 
     <GoogleAds slot="content" />
+
+    <h2>Passo 5: milhas extras por R$ 1 de anuidade</h2>
+    <p>
+      Vale a pena pagar anuidade? Para responder, comparamos cada cartão pago com uma referência: o
+      cartão sem anuidade que gera mais milhas no ano para o seu perfil, com o mesmo gasto e a
+      mesma cotação.
+    </p>
+    <p>
+      <code>milhas extras por real de anuidade = (milhas do cartão − milhas da referência) ÷ anuidade</code>
+    </p>
+    <p>
+      Um resultado positivo diz quantas milhas a mais cada real de anuidade compra. Zero significa
+      que o cartão pago gera as mesmas milhas que o gratuito, e um resultado negativo, que gera
+      menos. Para cartões sem anuidade, o indicador não se aplica. Ele não deve ser usado sozinho
+      para escolher o melhor cartão, porque ignora quanto cada cartão gera em relação ao gasto.
+    </p>
 
     <h2>Exemplo</h2>
     <p>
@@ -77,31 +107,43 @@ const HowWeCalculate = () => (
       de 1 para 1:
     </p>
     <ul>
-      {exampleRows.map(({ name, earns, annuity, card, result }) => (
+      {exampleRows.map(({ name, earns, annuity, card }) => (
         <li key={name}>
-          <strong>{name}</strong>, {earns}, {annuity}: rende{" "}
-          {decimal.format(milesPerReal(card, settings.dollarRate))} milha por real, ou{" "}
-          {formatMiles(result.annualMiles)} milhas por ano. Custo por milha:{" "}
-          <strong>{formatBRL(result.costPerMile)}</strong>.
+          <strong>{name}</strong>, {earns}, {annuity}: {formatMilesPerReal(card.milesPerReal)} milha
+          por real, ou {formatMiles(card.annualMiles)} milhas por ano. Índice Milheirador:{" "}
+          <strong>{formatIndex(card.milheiradorIndex)}</strong>.
         </li>
       ))}
     </ul>
     <p>
-      Mesmo cobrando {formatBRL(premium.annuity)} de anuidade, o cartão A gera milhas por cerca da
-      metade do custo do cartão B, porque acumula o dobro de pontos. Com um gasto menor, de{" "}
-      {formatBRL(lowSpend.monthlySpend)} por mês, o custo do cartão A sobe para{" "}
-      {formatBRL(evaluateCard(premium, lowSpend).costPerMile)} e o do cartão B continua em{" "}
-      {formatBRL(evaluateCard(basic, lowSpend).costPerMile)}. A anuidade pesa mais quanto menor for
-      o gasto, mas costuma pesar menos que a diferença de pontuação.
+      Com o cartão B como referência gratuita, o cartão A gera{" "}
+      {formatMiles(example.a.annualMiles - example.b.annualMiles)} milhas a mais por{" "}
+      {formatBRL(premium.annuity)} de anuidade:{" "}
+      <strong>{formatFeeEfficiency(example.a.additionalMilesPerFeeReal)}</strong> milhas extras por
+      real de anuidade.
     </p>
     <p>
-      Repare também que, num cartão sem anuidade, o custo por milha é simplesmente a cotação do
-      dólar dividida pelos pontos por dólar. É uma boa forma de conferir as contas de cabeça.
+      Com um gasto menor, de {formatBRL(lowSpend.monthlySpend)} por mês, o índice do cartão A sobe
+      para {formatIndex(exampleLow.a.milheiradorIndex)} e o do cartão B continua em{" "}
+      {formatIndex(exampleLow.b.milheiradorIndex)}, e as milhas extras por real de anuidade caem para{" "}
+      {formatFeeEfficiency(exampleLow.a.additionalMilesPerFeeReal)}. A anuidade pesa mais quanto
+      menor for o gasto.
+    </p>
+    <p>
+      Repare também que, num cartão sem anuidade, o índice é simplesmente a cotação do dólar
+      dividida pelos pontos por dólar. É uma boa forma de conferir as contas de cabeça.
+    </p>
+
+    <h2>Anuidade efetiva</h2>
+    <p>
+      Os indicadores usam a anuidade que você efetivamente paga. Ao escolher o seu cartão no
+      formulário, você pode informar a sua anuidade, inclusive zero se tiver isenção. Os demais
+      cartões do ranking usam a anuidade cheia divulgada pelo banco.
     </p>
 
     <h2>O que o cálculo não considera</h2>
     <p>
-      O custo por milha é uma comparação simples e transparente, mas não é a única coisa que
+      Os indicadores são comparações simples e transparentes, mas não são a única coisa que
       importa na escolha de um cartão. O ranking ainda não leva em conta:
     </p>
     <ul>
@@ -111,8 +153,9 @@ const HowWeCalculate = () => (
         as milhas recebidas.
       </li>
       <li>
-        <strong>Isenção de anuidade:</strong> muitos bancos dão desconto ou isenção na anuidade
-        para quem gasta um valor mínimo ou tem investimentos. Usamos a anuidade cheia divulgada.
+        <strong>Isenção dos outros cartões:</strong> muitos bancos dão desconto ou isenção na
+        anuidade para quem gasta um valor mínimo ou tem investimentos. Fora o seu cartão, usamos a
+        anuidade cheia divulgada.
       </li>
       <li>
         <strong>Compras internacionais:</strong> alguns cartões pontuam mais em compras no

@@ -15,11 +15,20 @@ const Privacy = () => (
       Milheirador não os armazena em nenhum banco de dados.
     </p>
 
+    <h2>Cotação do dólar</h2>
+    <p>
+      Para preencher a cotação do dia, o seu navegador consulta a API pública do Banco Central do
+      Brasil. Essa consulta não leva nenhum dado que você informou, apenas o pedido da cotação,
+      e, como em qualquer acesso a um site, o Banco Central recebe o endereço IP do seu
+      dispositivo.
+    </p>
+
     <h2>Preferências salvas no navegador</h2>
     <p>
       Se você escolher o tema claro ou escuro, essa preferência é guardada no armazenamento local
-      do seu navegador (localStorage). Ela não é enviada para nós e pode ser apagada a qualquer
-      momento nas configurações do navegador.
+      do seu navegador (localStorage), assim como a última cotação do dólar consultada, para não
+      repetir a consulta a cada página. Nada disso é enviado para nós, e tudo pode ser apagado a
+      qualquer momento nas configurações do navegador.
     </p>
 
     <h2>Anúncios e cookies</h2>

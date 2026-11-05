@@ -3,8 +3,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import RankingLegend from "@/components/RankingLegend";
 import RankingTable from "@/components/RankingTable";
 import { brandLabel, issuerLabel, programLabel, formatBRL } from "@/utils/format";
+import { DEFAULT_CRITERION, RANKING_CRITERIA, freeReferenceCard, sortCards } from "@/utils/rankMyCard";
 
 const cardsPerPage = 10;
 const ALL = "all";
@@ -16,11 +18,23 @@ const uniqueValues = (cards, key, label) =>
     label(a).localeCompare(label(b))
   );
 
+// `rankedCards` come from rankCards; positions follow the chosen criterion over all of them,
+// and the filters only hide rows.
 const CardRankingList = ({ rankedCards, highlightId }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState(emptyFilters);
+  const [criterion, setCriterion] = useState(DEFAULT_CRITERION);
 
-  const filteredCards = rankedCards.filter(
+  // Indicator 2 compares every card with the same free card; without one it can't sort.
+  const reference = freeReferenceCard(rankedCards);
+  const sortedCards = sortCards(rankedCards, criterion);
+
+  const handleCriterionChange = value => {
+    setCriterion(value);
+    setCurrentPage(1);
+  };
+
+  const filteredCards = sortedCards.filter(
     card =>
       (filters.issuer === ALL || card.issuer === filters.issuer) &&
       (filters.brand === ALL || card.brand === filters.brand) &&
@@ -55,13 +69,29 @@ const CardRankingList = ({ rankedCards, highlightId }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Ranking por custo da milha</CardTitle>
+        <CardTitle className="text-xl">Ranking pelo Índice Milheirador</CardTitle>
         <CardDescription>
-          Custo por milha = (gasto anual + anuidade) ÷ milhas acumuladas no ano, com base no
-          seu gasto mensal e na cotação informada.
+          Índice Milheirador = (gasto anual + anuidade) ÷ milhas geradas no ano, com base no seu
+          gasto mensal e na cotação informada. Ele mede o desembolso por milha gerada, não o preço
+          de mercado de uma milha.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <span className="text-sm font-medium" id="ranking-criterion">Ordenar por</span>
+          <Select value={criterion} onValueChange={handleCriterionChange}>
+            <SelectTrigger size="sm" className="w-full sm:w-80" aria-labelledby="ranking-criterion">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(RANKING_CRITERIA).map(([key, { label }]) => (
+                <SelectItem key={key} value={key} disabled={key === "feeEfficiency" && !reference}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
           {filterSelect("issuer", "Todos os bancos", uniqueValues(rankedCards, "issuer", issuerLabel), issuerLabel)}
           {filterSelect("brand", "Todas as bandeiras", uniqueValues(rankedCards, "brand", brandLabel), brandLabel)}
@@ -77,8 +107,9 @@ const CardRankingList = ({ rankedCards, highlightId }) => {
           </p>
         ) : (
           <RankingTable
-            rows={currentCards.map(card => ({ card, position: rankedCards.indexOf(card) + 1 }))}
+            rows={currentCards.map(card => ({ card, position: sortedCards.indexOf(card) + 1 }))}
             highlightId={highlightId}
+            criterion={criterion}
           />
         )}
 
@@ -93,6 +124,8 @@ const CardRankingList = ({ rankedCards, highlightId }) => {
             </Button>
           </div>
         )}
+
+        <RankingLegend reference={reference} />
       </CardContent>
     </Card>
   );

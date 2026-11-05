@@ -4,4 +4,4 @@ export const SITE_URL = "https://milheirador.com.br";
 export const CONTACT_EMAIL = "contato@milheirador.com.br";
 
 // Shown on the privacy page.
-export const PRIVACY_UPDATED = "2 de novembro de 2026";
+export const PRIVACY_UPDATED = "4 de novembro de 2026";

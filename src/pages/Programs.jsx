@@ -114,11 +114,11 @@ const Programs = () => (
     <h2>Como escolher</h2>
     <ul>
       <li>
-        <strong>Comece pelo custo da milha.</strong> Use o <a href="/">simulador</a> com o seu
-        gasto real para ver quais cartões acumulam mais rápido.
+        <strong>Comece pelo Índice Milheirador.</strong> Use o <a href="/">simulador</a> com o
+        seu gasto real para ver quais cartões acumulam mais rápido.
       </li>
       <li>
-        <strong>Pense em onde você vai usar as milhas.</strong> Uma milha barata só vale a pena se
+        <strong>Pense em onde você vai usar as milhas.</strong> Acumular rápido só vale a pena se
         o programa tiver voos para os destinos que você quer.
       </li>
       <li>

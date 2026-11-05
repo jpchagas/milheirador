@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import RankingLegend from "@/components/RankingLegend";
 import RankingTable from "@/components/RankingTable";
 import { formatBRL } from "@/utils/format";
+import { freeReferenceCard } from "@/utils/rankMyCard";
 
 const TOP = 3;
 
@@ -18,12 +20,13 @@ const TopRanking = ({ rankedCards, current, settings }) => {
           Seu cartão está em {position}º de {rankedCards.length}
         </CardTitle>
         <CardDescription>
-          Os {TOP} cartões com a milha mais barata para um gasto de{" "}
-          {formatBRL(settings.monthlySpend)} por mês e dólar a {formatBRL(settings.dollarRate)}.
+          Os {TOP} cartões com o menor Índice Milheirador (desembolso por milha gerada) para um
+          gasto de {formatBRL(settings.monthlySpend)} por mês e dólar a {formatBRL(settings.dollarRate)}.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <RankingTable rows={rows} highlightId={current.id} showGaps />
+        <RankingLegend reference={freeReferenceCard(rankedCards)} />
       </CardContent>
     </Card>
   );

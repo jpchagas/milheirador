@@ -26,8 +26,8 @@ const About = () => (
         anuidade.
       </li>
       <li>
-        A explicação de <a href="/como-calculamos">como calculamos</a> o custo da milha, com
-        exemplos.
+        A explicação de <a href="/como-calculamos">como calculamos</a> o Índice Milheirador e
+        os outros indicadores, com exemplos.
       </li>
       <li>
         Um <a href="/programas">guia dos programas</a> de pontos e milhas.

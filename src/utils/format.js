@@ -49,7 +49,26 @@ const signedInteger = new Intl.NumberFormat("pt-BR", {
 });
 const decimal = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
 
+const signedBrl = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  signDisplay: "exceptZero",
+});
+
 export const formatBRL = value => (Number.isFinite(value) ? brl.format(value) : "—");
+export const formatSignedBRL = value => (Number.isFinite(value) ? signedBrl.format(value) : "—");
+export const formatDecimal = value => decimal.format(value);
+
+// Ranking indicators (utils/rankMyCard.js), shown with fixed decimals.
+const fourDecimals = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+const signedTwoDecimals = new Intl.NumberFormat("pt-BR", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+  signDisplay: "exceptZero",
+});
+export const formatIndex = value => fourDecimals.format(value);
+export const formatMilesPerReal = value => fourDecimals.format(value);
+export const formatFeeEfficiency = value => signedTwoDecimals.format(value);
 export const formatMiles = value => integer.format(value);
 export const formatMilesDelta = value => signedInteger.format(value);
 export const formatAccumulation = card =>

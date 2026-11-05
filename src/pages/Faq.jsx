@@ -15,12 +15,34 @@ const questions = [
     ),
   },
   {
-    q: "O que é o custo por milha?",
+    q: "O que é o Índice Milheirador?",
     a: (
       <p>
-        É quanto você gasta, em reais, para ganhar cada milha com um cartão, somando o gasto do ano
-        e a anuidade e dividindo pelas milhas acumuladas. Quanto menor, melhor. A fórmula completa
-        está em <a href="/como-calculamos">como calculamos</a>.
+        É o desembolso total em reais por milha gerada: o gasto do ano mais a anuidade, dividido
+        pelas milhas que o cartão gera. Quanto menor, melhor. Ele não é o preço de uma milha,
+        porque o gasto também paga os produtos e serviços que você comprou. A fórmula completa está
+        em <a href="/como-calculamos">como calculamos</a>.
+      </p>
+    ),
+  },
+  {
+    q: "O que são as milhas extras por real de anuidade?",
+    a: (
+      <p>
+        Mostram quantas milhas a mais cada real de anuidade rende em comparação com o cartão
+        gratuito que gera mais milhas para o seu gasto. Positivo, a anuidade compra milhas extras;
+        negativo, o cartão pago gera menos que o gratuito. Para cartões sem anuidade, não se aplica.
+        Use junto com os outros indicadores, não sozinho.
+      </p>
+    ),
+  },
+  {
+    q: "Tenho isenção de anuidade. Como fica?",
+    a: (
+      <p>
+        Ao escolher o seu cartão no simulador, informe a anuidade que você paga, ou 0 se tiver
+        isenção. Os indicadores do seu cartão passam a usar esse valor. Os outros cartões do
+        ranking continuam com a anuidade cheia.
       </p>
     ),
   },
@@ -30,7 +52,9 @@ const questions = [
       <p>
         Porque a maioria dos cartões pontua por dólar gasto, mesmo em compras em reais. O banco
         converte o valor da compra pela cotação dele, e quanto mais alta a cotação, menos pontos
-        cada real rende. Use a cotação que aparece na sua fatura, se souber.
+        cada real rende. O campo já vem preenchido com a cotação PTAX de venda do dia, publicada
+        pelo Banco Central. Os bancos costumam cobrar um pouco acima dela, então, se souber,
+        use a cotação que aparece na sua fatura.
       </p>
     ),
   },
@@ -110,7 +134,7 @@ const question = ({ q, a }) => (
 const Faq = () => (
   <Article
     title="Perguntas frequentes"
-    intro="Respostas para as dúvidas mais comuns sobre o Milheirador e o custo por milha."
+    intro="Respostas para as dúvidas mais comuns sobre o Milheirador e o Índice Milheirador."
   >
     {questions.slice(0, 5).map(question)}
     <GoogleAds slot="content" />
