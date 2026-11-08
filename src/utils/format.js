@@ -1,7 +1,7 @@
 const ISSUERS = {
   bradesco: "Bradesco",
   itau: "Itaú",
-  santander: "Santander",
+  bb: "Banco do Brasil",
   c6: "C6 Bank",
   xp: "XP",
   inter: "Inter",

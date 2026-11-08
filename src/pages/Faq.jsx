@@ -104,9 +104,8 @@ const questions = [
     a: (
       <p>
         Hoje são {creditCards.length} cartões de{" "}
-        {new Set(creditCards.map(c => c.issuer)).size} bancos, com pontos em Livelo, Esfera,
-        LATAM Pass, Smiles, Azul Fidelidade, AAdvantage, TAP Miles&amp;Go e programas dos
-        próprios bancos. Veja todos no <a href={RANKING_PATH}>ranking completo</a> e entenda
+        {new Set(creditCards.map(c => c.issuer)).size} bancos, com pontos na Livelo, na Smiles e
+        nos programas dos próprios bancos. Veja todos no <a href={RANKING_PATH}>ranking completo</a> e entenda
         cada programa no <a href="/programas">guia dos programas</a>.
       </p>
     ),

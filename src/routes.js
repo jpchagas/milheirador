@@ -7,7 +7,7 @@ export const routes = [
     path: HOME_PATH,
     title: "Milheirador: qual cartão de crédito gera mais milhas para o seu gasto",
     description:
-      "Compare cartões de crédito brasileiros pelo Índice Milheirador, o desembolso por milha gerada, e pelas milhas por real gasto, em Livelo, Esfera, LATAM Pass, Smiles, Azul Fidelidade e outros programas.",
+      "Compare cartões de crédito brasileiros pelo Índice Milheirador, o desembolso por milha gerada, e pelas milhas por real gasto, em Livelo, Smiles e nos programas dos próprios bancos.",
   },
   {
     path: RESULT_PATH,

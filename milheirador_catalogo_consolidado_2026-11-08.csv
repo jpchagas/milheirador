@@ -1,0 +1,97 @@
+Banco,Programa,Qt Pontos,Moeda,Taxa Transferência,Anuidade,Bandeira,Modelo
+C6,Átomos,0.05,BRL,1,0,Mastercard,C6 Mastercard
+C6,Átomos,0.4,BRL,1,0,Mastercard,C6 Platinum
+C6,Átomos,2,USD,1,600,Mastercard,C6 Black
+C6,Átomos,2.5,USD,1,1176,Mastercard,C6 Carbon
+C6,Átomos,5,USD,1,3960,Mastercard,C6 Graphene
+Inter,Inter Loop,0.1,BRL,1,0,Mastercard,Inter Gold
+Inter,Inter Loop,0.2,BRL,1,0,Mastercard,Inter Platinum
+Inter,Inter Loop,0.4,BRL,1,0,Mastercard,Inter Prime
+Inter,Inter Loop,0.5,BRL,1,0,Mastercard,Inter Win
+BTG,Pontos BTG,1,USD,1,0,Mastercard,BTG Gold
+BTG,Pontos BTG,1.6,USD,1,120,Mastercard,BTG Platinum
+BTG,Pontos BTG,2.2,USD,1,1000,Mastercard,BTG Black
+BTG,Pontos BTG,3,USD,1,4800,Mastercard,BTG Ultrablue
+BTG,Pontos BTG,4.5,USD,1,4800,Mastercard,BTG Ultrablue World Legend
+Banco do Brasil,Livelo,1,USD,1,0,Visa,Ourocard Visa Gold
+Banco do Brasil,Livelo,1.2,USD,1,546,Visa,Ourocard Visa Platinum
+Banco do Brasil,Livelo,1,USD,1,567,Mastercard,Ourocard Mastercard Platinum
+Banco do Brasil,Livelo,2,USD,1,996,Visa,Ourocard Visa Infinite
+Banco do Brasil,Livelo,2,USD,1,1098,Mastercard,Ourocard Mastercard Black
+Banco do Brasil,Livelo,2,USD,1,1056,Elo,Ourocard Elo Nanquim
+Banco do Brasil,Livelo,4,USD,1,1440,Visa,Altus Visa
+Caixa,Pontos CAIXA,1.2,USD,1,207,Visa,CAIXA Visa Gold
+Caixa,Pontos CAIXA,1,USD,1,207,Mastercard,CAIXA Mastercard Gold
+Caixa,Pontos CAIXA,1.6,USD,1,453,Visa,CAIXA Visa Platinum
+Caixa,Pontos CAIXA,1.4,USD,1,414,Mastercard,CAIXA Mastercard Platinum
+Caixa,Pontos CAIXA,1.6,USD,1,414,Elo,CAIXA Elo Grafite
+Caixa,Pontos CAIXA,2.3,USD,1,828,Visa,CAIXA Visa Infinite
+Caixa,Pontos CAIXA,2.1,USD,1,828,Mastercard,CAIXA Mastercard Black
+Caixa,Pontos CAIXA,3,USD,1,1100,Elo,CAIXA Elo Diners Club
+Caixa,Pontos CAIXA,4,USD,1,1650,Visa,CAIXA Ícone Visa Infinite
+Sicredi,Recompensas Sicredi,1,USD,1,265,Visa / Mastercard,Sicredi Gold
+Sicredi,Recompensas Sicredi,1.5,USD,1,450,Visa / Mastercard,Sicredi Platinum
+Sicredi,Recompensas Sicredi,2,USD,1,1152.5,Mastercard,Sicredi Mastercard Black
+Sicredi,Recompensas Sicredi,3,USD,1,1200,Visa,Sicredi Visa Infinite
+Banrisul,Banriclube,1,USD,1,360,Mastercard,Banrisul Gold
+Banrisul,Banriclube,1.5,USD,1,504,Mastercard,Banrisul Platinum
+Banrisul,Banriclube,2.2,USD,1,888,Mastercard,Banrisul Black
+Banrisul,Banriclube,2.2,USD,1,996,Visa,Banrisul Infinite
+Nubank,Livelo,2.2,USD,1,1068,Mastercard,Ultravioleta
+Nubank,Livelo,1.4,USD,1,468,Mastercard,Chroma
+BRB,Curtaí,2,USD,1,1092,Visa,BRB Infinite
+BRB,Curtaí,2,USD,1,1320,Mastercard,BRB Black
+BRB,Curtaí,1,USD,1,588,Visa / Mastercard,BRB Platinum
+BRB,Curtaí,1,USD,1,444,Visa / Mastercard,BRB Gold
+BRB,DUX Experience,5,USD,1,4800,Visa,BRB DUX
+Itaú,Pontos Itaú,2,USD,1,960,Mastercard,Personnalité The Essential
+Itaú,Pontos Itaú,4.5,USD,1,4000,Mastercard,Personnalité The World Legend
+Itaú,Pontos Itaú,1.5,USD,1,0,,Itaú Platinum
+Itaú,Pontos Itaú,2,USD,1,1200,Mastercard,Itaú Mastercard Black
+Itaú,Pontos Itaú,2,USD,1,1200,Visa,Itaú Visa Infinite
+Itaú,Pontos Itaú,2,USD,1,1056,Mastercard,Itaú Personnalité Mastercard Black
+Itaú,Pontos Itaú,2,USD,1,1056,Visa,Itaú Personnalité Visa Infinite
+Itaú,Pontos Itaú,3,USD,1,4000,Mastercard,Itaú Personnalité The One
+Itaú,Pontos Itaú,1.7,USD,1,570,Visa,Azul Itaú Gold
+Itaú,Pontos Itaú,2.2,USD,1,798,Visa,Azul Itaú Platinum
+Itaú,Pontos Itaú,3,USD,1,1356,Visa,Azul Itaú Visa Infinite
+Itaú,Pontos Itaú,3,USD,1,1356,Mastercard,Azul Itaú Mastercard Skyline
+Itaú,Pontos Itaú,5,USD,1,405,,Pão de Açúcar Gold
+Itaú,Pontos Itaú,5,USD,1,650,,Pão de Açúcar Platinum
+Itaú,Pontos Itaú,5,USD,1,678,Mastercard,Pão de Açúcar Mastercard Black
+Bradesco,Livelo,5,USD,1,25000,American Express,Bradesco The Centurion Card
+Bradesco,Livelo,4,USD,1,2112,Visa,Bradesco Visa Aeternum
+Bradesco,Livelo,2.5,USD,1,1500,Visa,Bradesco Principal Visa Infinite
+Bradesco,Livelo,2.2,USD,1,1812,Elo,Bradesco Elo Diners Club
+Bradesco,Livelo,2.2,USD,1,1992,American Express,Bradesco American Express The Platinum Card
+Bradesco,Livelo,1.8,USD,1,1428,Elo,Bradesco Elo Nanquim
+Bradesco,Livelo,2,USD,1,1260,Visa,Bradesco Visa Infinite
+Bradesco,Smiles,3,USD,1,1500,Visa,Bradesco GOL Smiles Infinite
+Nomad,Nomad Rewards,1.6,USD,1,0,Visa,Nomad Explorer Visa Infinite
+Nomad,Nomad Rewards,1.5,USD,1,550.8,Visa,Nomad Explorer Visa Platinum
+Revolut,RevPoints,0.1,USD,1,0,,Revolut Standard
+Revolut,RevPoints,0.1,USD,1,119.88,,Revolut Plus
+Revolut,RevPoints,0.25,USD,1,239.88,,Revolut Premium
+Revolut,RevPoints,0.5,USD,1,959.88,Visa,Revolut Metal
+Revolut,RevPoints,1,USD,1,2999.88,Visa,Revolut Ultra
+Safra,Safra Rewards,3,USD,1,4200,Visa,Safra Iridium Visa Infinite
+Safra,Safra Rewards,2.5,USD,1,1500,Visa,Safra Investor Visa Infinite
+Safra,Safra Rewards,2,USD,1,1500,Visa,Safra Visa Infinite
+Safra,Safra Rewards,1.5,USD,1,546,Visa,Safra Visa Platinum
+Safra,Safra Rewards,1.1,USD,1,0,Visa,Safra Visa Gold
+Sicoob,Coopera,1.2,USD,1,0,,Sicoob Gold
+Sicoob,Coopera,1.2,USD,1,274,,Sicoob Gold Plus
+Sicoob,Coopera,1.5,USD,1,358.8,,Sicoob Platinum
+Sicoob,Coopera,2.2,USD,1,708,,Sicoob Verth
+Sicoob,Coopera,2.5,USD,1,1428,,Sicoob Merith
+Sicoob,Coopera,4,USD,1,1790,,Sicoob Zenith
+Unicred,Único,3.5,USD,1,3000,Visa,Unicred Ímpar Visa Infinite
+Unicred,Único,5,USD,1,18000,Visa,Unicred Visa Infinite Privilege
+Unicred,Único,2.2,USD,1,930,Visa,Unicred Visa Infinite Único
+Unicred,Único,1.5,USD,1,300,Visa,Unicred Visa Platinum
+Unicred,Único,1,USD,1,199,Visa,Unicred Visa Gold
+Unicred,Único,1,USD,1,120,Visa,Unicred Visa Classic
+Unicred,Único,1.5,USD,1,300,Visa,Unicred Visa Signature Business
+XP,Pontos XP,3,USD,1,4200,Visa,XP Legacy Visa Infinite
+XP,Pontos XP,2.2,USD,1,0,Visa,XP Visa Infinite
+XP,Pontos XP,,USD,1,0,Visa,XP One Visa Infinite

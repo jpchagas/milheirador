@@ -200,7 +200,7 @@ function App({ path: rawPath, search }) {
           <div className="mx-auto max-w-3xl space-y-8">
             <section className="mx-auto max-w-2xl text-center">
               <span className="mb-4 inline-flex rounded-full bg-highlight px-3 py-1 text-sm font-medium text-highlight-foreground">
-                Livelo, Esfera, LATAM Pass, Smiles e mais
+                Livelo, Smiles e programas dos bancos
               </span>
               <h1 className="font-heading text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">
                 Qual cartão gera mais milhas para o seu gasto?
